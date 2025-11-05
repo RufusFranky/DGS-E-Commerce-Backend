@@ -47,4 +47,14 @@ app.get("/products/:id", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
+// ✅ Debug route to test DB connection
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json({ message: "Connected successfully!", time: result.rows[0].now });
+  } catch (error) {
+    console.error("DB connection error:", error);
+    res.status(500).json({ error: "Failed to connect to database", details: error.message });
+  }
+});
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
