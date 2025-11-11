@@ -12,7 +12,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",                     // local dev
-      "https://hotbray-frontend.vercel.app",       // production frontend
+      "https://dgstech-frontend.vercel.app",       // production frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
