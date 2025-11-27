@@ -22,7 +22,7 @@ router.post("/send", async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
       port: Number(process.env.MAIL_PORT),
-      secure: flase, // Gmail uses SSL
+      secure: false, // Gmail uses SSL
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
