@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import pool from "./db.js";
 import fastOrderRoutes from "./fastOrderRoutes.js";
 import quotesRoutes from "./quotesRoutes.js";
+import { initSearchSettings} from "./meiliClient.js";
+import searchRoutes from "./searchRoutes.js";
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ app.use(
 app.use(express.json());
 app.use("/fast-order", fastOrderRoutes);
 app.use("/quotes", quotesRoutes);
+app.use("/search", searchRoutes);
 
 // Test route
 app.get("/", (req, res) => {
@@ -256,6 +259,15 @@ app.post("/fast-order/bulk-validate", async (req, res) => {
 
 // Render’s dynamic port (keeps your previous behavior)
 const PORT = process.env.PORT || 10000;
+(async () => {
+  try {
+    await initSearchSettings();
+    console.log("🔍 MeiliSearch index initialized");
+  } catch (err) {
+    console.error("Meilisearch initialization failed:", err.message);
+  }
+})();
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running and listening on port ${PORT}`);
 });
