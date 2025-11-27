@@ -3,9 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./db.js";
 import fastOrderRoutes from "./fastOrderRoutes.js";
-import quotesRoutes from "./quotesRoutes.js"; // <-- NEW
-import searchRoutes from "./searchRoutes.js";
-
+import quotesRoutes from "./quotesRoutes.js";
 
 dotenv.config();
 
@@ -25,8 +23,7 @@ app.use(
 
 app.use(express.json());
 app.use("/fast-order", fastOrderRoutes);
-app.use("/quotes", quotesRoutes); // <-- NEW (mount quotes router)
-app.use("/search", searchRoutes)
+app.use("/quotes", quotesRoutes);
 
 // Test route
 app.get("/", (req, res) => {
