@@ -7,6 +7,7 @@ import quotesRoutes from "./quotesRoutes.js";
 import { initSearchSettings} from "./meiliClient.js";
 import searchRoutes from "./searchRoutes.js";
 import contactRoutes from "./contactRoutes.js";
+import ordersRoutes from "./ordersRoutes.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/fast-order", fastOrderRoutes);
 app.use("/quotes", quotesRoutes);
 app.use("/search", searchRoutes);
 app.use("/contact", contactRoutes);
+app.use("/orders", ordersRoutes);
 
 // Test route
 app.get("/", (req, res) => {
@@ -76,11 +78,6 @@ app.get("/test-db", async (req, res) => {
   }
 });
 
-/**
- * FAST ORDER endpoints (single lookup + bulk validate)
- * - /fast-order/single?part=PARTNUMBER
- * - POST /fast-order/bulk-validate { items: [{ part_number, qty }] }
- */
 
 // Helper: normalize part number
 function normalizePart(s) {

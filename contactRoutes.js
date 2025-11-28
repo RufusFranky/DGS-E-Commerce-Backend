@@ -20,15 +20,13 @@ router.post("/send", async (req, res) => {
 
     // Email notification
     const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: Number(process.env.MAIL_PORT),
-      secure: false, // Gmail uses SSL
+      service: "gmail",
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
       tls: {
-        ciphers: "SSLv3", // Fixes SSL issues on Render
+        rejectUnauthorized: false,
       },
     });
 
