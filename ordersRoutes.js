@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
        RETURNING *`,
       [
         clerk_user_id,
-        JSON.stringify(items),     // Ensure valid JSON
+        JSON.stringify(items),
         total_amount,
         payment_method,
         JSON.stringify(billing),
@@ -50,6 +50,26 @@ router.get("/:clerk_user_id", async (req, res) => {
   } catch (err) {
     console.error("Order fetch error:", err);
     return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ➤ Get order details by order ID
+router.get("/details/:order_id", async (req, res) => {
+  try {
+    const { order_id } = req.params;
+    const result = await pool.query(
+      `SELECT * FROM orders WHERE id = $1`,
+      [order_id]
+    );
+
+    if (result.rows.length === 0)
+      return res.json({ success: false, error: "Order not found" });
+
+    return res.json({ success: true, order: result.rows[0] });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ success: false, error: err.message });
   }
 });
 
