@@ -37,11 +37,20 @@ app.get("/", (req, res) => {
   res.send("Backend is running...");
 });
 
-// Get all products
+// Get all products (optional category filter)
 app.get("/products", async (req, res) => {
   try {
+    const { category } = req.query;
+    if (category) {
+      const result = await pool.query(
+        "SELECT * FROM products WHERE category = $1",
+        [category]
+      );
+      return res.json(result.rows);
+    }
+
     const result = await pool.query("SELECT * FROM products");
-    res.json(result.rows);
+    return res.json(result.rows);
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Database error" });
